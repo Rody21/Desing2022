@@ -28,17 +28,16 @@ import java.text.SimpleDateFormat;
 public class MainActivity extends AppCompatActivity {
 
     SimpleDateFormat simpleDateFormat;
-    int PUERTO, PUERTO2, PUERTO3;
-    String Date, TimeVar, PuertoString, PuertoString2, PuertoString3;
+    int PUERTO;
+    String Date, TimeVar, PuertoString;
     UDP_Thread udp_Thread;
 
-    private static final int REQUEST_PERMISSION_LOCATION = 100;
     private final int delay = 5000;
     private boolean Status = false;
     ToggleButton BtSend;
     Handler handler = new Handler();
     android.widget.TextView Latitud, TimeTXT;
-    InetAddress IPaddress, IPaddress2, IPaddress3;
+    InetAddress IPaddress, IPaddress2, IPaddress3, IPaddress4;
     FusedLocationProviderClient fusedLocationProviderClient;
 
     @Override
@@ -114,19 +113,16 @@ public class MainActivity extends AppCompatActivity {
 
         public void run() {
             try {
-                PuertoString = "8506"; //CASA DE DANIEL
+                PuertoString = "8506"; //Puerto para todos
                 PUERTO = Integer.parseInt(PuertoString);
-                PuertoString2 = "60000"; //CASA DE SANTIAGO
-                PUERTO2 = Integer.parseInt(PuertoString2);
-                PuertoString3 = "9000"; //CASA DE RICHARD
-                PUERTO3 = Integer.parseInt(PuertoString3);
                 IPaddress = InetAddress.getByName("gpstracker.sytes.net"); //CASA DE DANIEL
                 IPaddress2 = InetAddress.getByName("ddnsdesign.ddns.net"); //CASA DE SANTIAGO
                 IPaddress3 = InetAddress.getByName("gpstracker.hopto.me"); //CASA DE RICHARD
+                IPaddress4 = InetAddress.getByName("gpstrack.sytes.net"); //CASA DE MARLON
                 Date = null;
                 Date = new java.text.SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(Localizacion.TimeVar);
                 String Mensaje = (Localizacion.Late + "\n" + Localizacion.Longe + "\n" + Date);
-                udp_Thread = new UDP_Thread(PUERTO, PUERTO2, PUERTO3, Mensaje, IPaddress, IPaddress2, IPaddress3);
+                udp_Thread = new UDP_Thread(PUERTO, Mensaje, IPaddress, IPaddress2, IPaddress3, IPaddress4);
                 udp_Thread.start();
 
                 if(Status) {
